@@ -1,0 +1,12 @@
+.item { margin-bottom: 12px; }
+.row { display: flex; align-items: center; gap: 12px; }
+.name { margin: 0; font-size: 16px; font-weight: 600; }
+.actions { margin-left: auto; display: flex; gap: 8px; }
+.preview {
+  white-space: pre-wrap;
+  background: #f7f7f7;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 8px 0 16px;
+  font-size: 14px;
+}

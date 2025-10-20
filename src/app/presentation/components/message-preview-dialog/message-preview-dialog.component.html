@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Vista previa de mensaje</h2>
+
+<mat-dialog-content>
+  <div class="item" *ngFor="let it of data.items">
+    <div class="row">
+      <h3 class="name">{{ it.nombre }}</h3>
+      <span class="actions">
+        <a mat-stroked-button [href]="it.waUrl" target="_blank">
+          <mat-icon>send</mat-icon> WhatsApp
+        </a>
+        <button mat-stroked-button (click)="copyOne(it.mensaje)">
+          <mat-icon>content_copy</mat-icon> Copiar
+        </button>
+      </span>
+    </div>
+    <pre class="preview">{{ it.mensaje }}</pre>
+    <mat-divider></mat-divider>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="copyAll()">
+    <mat-icon>content_copy</mat-icon> Copiar todo
+  </button>
+  <button mat-raised-button color="primary" (click)="close()">Cerrar</button>
+</mat-dialog-actions>

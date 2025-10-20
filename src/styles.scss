@@ -1,1 +1,159 @@
-/* You can add global styles to this file, and also import other style files */
+@use "sass:color";
+/* 🌿 Paleta Verde Oliva Elegante */
+$color-primary: #6b8a4f; // verde oliva principal
+$color-accent: #d4b483; // dorado suave / champagne
+$color-bg: #f9f8f6;     // fondo crema claro
+$color-card: #ffffff;   // fondo de tarjetas
+$color-text: #3a3a3a;   // texto neutro
+$color-border: #e1e1dd;
+$color-success: #7ca86d; // verde claro
+$color-warn: #d96b6b;
+
+/* ✨ Tipografía */
+body {
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  background-color: $color-bg;
+  color: $color-text;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* 💚 Toolbar */
+mat-toolbar {
+  background: $color-primary !important;
+  color: #fff !important;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 🌾 Botones */
+button[mat-raised-button],
+button[mat-stroked-button],
+mat-icon-button {
+  border-radius: 20px !important;
+  transition: all 0.25s ease;
+}
+
+button[mat-raised-button] {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+button[mat-raised-button]:hover,
+mat-icon-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+button[mat-raised-button][color="accent"] {
+  background-color: $color-accent !important;
+  color: #fff !important;
+}
+
+button[mat-raised-button][color="accent"]:hover {
+  background-color: color.adjust($color-accent, $lightness: -5%) !important;
+}
+
+/* 🍃 Iconos */
+mat-icon {
+  font-size: 20px !important;
+  color: $color-primary !important;
+}
+
+mat-icon[color="warn"] {
+  color: $color-warn !important;
+}
+
+mat-icon[color="primary"] {
+  color: $color-primary !important;
+}
+
+mat-icon[color="accent"] {
+  color: $color-accent !important;
+}
+
+/* 📋 Tabla */
+mat-card {
+  background: $color-card;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 4px;
+}
+
+th {
+  background-color: #eef1e8;
+  color: $color-primary;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+  border: none;
+}
+
+td {
+  background-color: #fff;
+  border: none;
+  font-size: 14px;
+  padding: 8px 12px;
+}
+
+tr.not-sent td {
+  background-color: #fef9e8;
+}
+
+tr.selected-row td {
+  background-color: #f0f7ed !important;
+}
+
+/* ✅ Checkbox */
+mat-checkbox .mdc-checkbox__background {
+  border-radius: 6px !important;
+  border-color: $color-primary !important;
+}
+
+/* 🍾 Snackbars */
+.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-color: $color-primary;
+  --mdc-snackbar-supporting-text-color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  border-radius: 8px !important;
+}
+
+/* 🌈 Colores personalizados para íconos */
+.icon-whatsapp {
+  color: #25D366 !important; /* verde WhatsApp */
+}
+
+.icon-edit {
+  color: #f4b400 !important; /* dorado suave */
+}
+
+.icon-delete {
+  color: #e57373 !important; /* rojo pastel */
+}
+
+.icon-preview {
+  color: #4a7c59 !important; /* verde musgo oscuro */
+}
+
+.icon-sent {
+  color: #7ca86d !important; /* verde éxito suave */
+}
+
+/* 🔘 Hover con transición suave */
+button[mat-icon-button] mat-icon {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+button[mat-icon-button]:hover mat-icon {
+  transform: scale(1.15);
+  opacity: 0.9;
+}
