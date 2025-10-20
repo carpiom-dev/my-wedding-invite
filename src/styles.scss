@@ -157,3 +157,18 @@ button[mat-icon-button]:hover mat-icon {
   transform: scale(1.15);
   opacity: 0.9;
 }
+
+.snackbar-success { background-color: #7ca86d !important; color: #fff !important; }
+.snackbar-error { background-color: #d96b6b !important; color: #fff !important; }
+.snackbar-info { background-color: #6b8a4f !important; color: #fff !important; }
+
+.mat-mdc-snack-bar .mdc-snackbar__action {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.mat-mdc-snack-bar .mdc-snackbar__action:hover {
+  opacity: 0.8;
+}
+
+

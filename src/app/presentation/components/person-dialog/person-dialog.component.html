@@ -1,26 +1,37 @@
 <h2 mat-dialog-title>
-  {{ data.person ? 'Editar persona' : 'Nueva persona' }}
+  {{ data?.person ? 'Editar persona' : 'Nueva persona' }}
 </h2>
-
-<mat-dialog-content [formGroup]="form" class="form-container">
-  <mat-form-field appearance="outline">
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="w-full">
     <mat-label>Nombre *</mat-label>
-    <input matInput formControlName="nombre" required />
+    <input matInput [(ngModel)]="person.nombre" required />
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="w-full">
     <mat-label>Apellido</mat-label>
-    <input matInput formControlName="apellido" />
+    <input matInput [(ngModel)]="person.apellido" />
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="w-full">
     <mat-label>Teléfono</mat-label>
-    <input matInput formControlName="telefono" placeholder="593999000111" />
+    <input
+      matInput
+      type="tel"
+      [(ngModel)]="person.telefono"
+      (blur)="onPhoneBlur()"
+      placeholder="Ej: 0962786611"
+    />
+    <mat-hint align="start">Se completará automáticamente con 593 si falta</mat-hint>
+    @if(!isPhoneValid(person.telefono)){
+
+    }
+
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="w-full">
     <mat-label>Nota</mat-label>
-    <textarea matInput formControlName="nota" rows="2"></textarea>
+    <textarea matInput rows="2" [(ngModel)]="person.nota"></textarea>
   </mat-form-field>
 </mat-dialog-content>
 

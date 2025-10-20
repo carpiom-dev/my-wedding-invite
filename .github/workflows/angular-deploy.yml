@@ -1,10 +1,11 @@
-name: Deploy Angular to GitHub Pages
+name: Angular Auto Deploy to GitHub Pages
 
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
 
+# 🟢 Permite al bot hacer push en gh-pages
 permissions:
   contents: write
 
@@ -32,3 +33,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: dist/my-wedding-invite/browser
+          enable_jekyll: false

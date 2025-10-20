@@ -1,9 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '@presentation/material.module';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MaterialModule } from '@presentation/material.module';
 import { LIST_PERSONS, REMOVE_PERSON } from '@infrastructure/di/injection-tokens';
 import { WhatsappService } from '@infrastructure/services/whatsapp.service';
 import { PersonDialogComponent } from '@presentation/components/person-dialog/person-dialog.component';
@@ -27,104 +27,84 @@ export class PersonListComponent {
   displayedColumns = ['select', 'nombre', 'telefono', 'acciones'];
   selectedCount = 0;
 
-  async ngOnInit() {
-    await this.refresh();
-  }
+  async ngOnInit() { await this.refresh(); }
 
   async refresh() {
     const people = await this.list.execute();
-    // Reinicia selección
     this.data.set(people.map(p => ({ ...p, selected: false })));
     this.updateSelection();
   }
 
   openDialog(person?: any) {
     const ref = this.dialog.open(PersonDialogComponent, {
-      width: '400px',
+      width: '100%',
+      maxWidth: '100vh',
+      height: 'auto',
+      maxHeight: '100vh',
       data: { person }
     });
 
-    ref.afterClosed().subscribe(async (result) => {
-      if (result) {
-        this.snack.open('Guardado correctamente', 'Cerrar', { duration: 2000 });
-        await this.refresh();
-      }
+    ref.afterClosed().subscribe(async result => {
+      if (result) await this.refresh();
     });
   }
 
   async delete(id: string) {
     await this.remove.execute({ value: id });
-    this.snack.open('Eliminado correctamente', 'Cerrar', { duration: 2000 });
+    this.snack.open('Invitado eliminado', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
     await this.refresh();
   }
 
+  // WhatsApp
   async sendOne(person: any) {
+    const phone = person.telefono?.replace(/\D/g, '');
+    if (!/^593\d{9}$/.test(phone)) {
+      this.snack.open(`Número inválido para ${person.nombre}`, 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
+      return;
+    }
     await this.wa.openIndividual(person);
     await this.refresh();
+    this.snack.open(`Mensaje de ${person.nombre} abierto en WhatsApp`, 'Cerrar', { duration: 3000, panelClass: ['snackbar-info'] });
   }
 
   async sendSelected() {
     const selected = this.data().filter(p => p.selected && !p.enviado);
-    if (selected.length === 0) {
-      this.snack.open('No hay invitados seleccionados para enviar.', 'Cerrar', { duration: 2000 });
+    if (!selected.length) {
+      this.snack.open('No hay invitados seleccionados para enviar', 'Cerrar', { duration: 2500, panelClass: ['snackbar-info'] });
       return;
     }
     await this.wa.openBulk(selected);
     await this.refresh();
-    this.snack.open(`Enviado a ${selected.length} invitado(s).`, 'Cerrar', { duration: 3000 });
+    this.snack.open(`Mensajes abiertos en WhatsApp para ${selected.length} invitado(s)`, 'Cerrar', { duration: 3500, panelClass: ['snackbar-success'] });
   }
 
-  // --- Métodos auxiliares de selección ---
-  updateSelection() {
-    const count = this.data().filter(p => p.selected).length;
-    this.selectedCount = count;
-  }
-
-  toggleAll(checked: boolean) {
-    this.data.update(list => list.map(p => ({ ...p, selected: checked && !p.enviado })));
-    this.updateSelection();
-  }
-
-  allSelected() {
-    const list = this.data();
-    const selectable = list.filter(p => !p.enviado);
-    return selectable.length > 0 && selectable.every(p => p.selected);
-  }
-
-  someSelected() {
-    const list = this.data();
-    const selectable = list.filter(p => !p.enviado);
-    return selectable.some(p => p.selected) && !this.allSelected();
-  }
-
+  // Preview
   previewOne(person: any) {
-  const mensaje = this.wa.buildMessage(person);
-  const waUrl = this.wa.buildUrl(person);
-  this.dialog.open(MessagePreviewDialogComponent, {
-    width: '640px',
-    data: {
-      items: [{
-        nombre: `${person.nombre} ${person.apellido ?? ''}`.trim(),
-        mensaje,
-        waUrl
-      }]
-    }
-  });
-}
+    const mensaje = this.wa.buildMessage(person);
+    const waUrl = this.wa.buildUrl(person);
+    this.dialog.open(MessagePreviewDialogComponent, {
+      width: '100%',
+      maxWidth: '100vh',
+      height: 'auto',
+      maxHeight: '100vh',
+      data: { items: [{ nombre: `${person.nombre} ${person.apellido}`, mensaje, waUrl }] }
+    });
+  }
 
-previewSelected() {
-  const selected = this.data().filter(p => p.selected);
-  if (selected.length === 0) { return; }
+  previewSelected() {
+    const selected = this.data().filter(p => p.selected);
+    if (!selected.length) return;
+    const items = selected.map(p => ({
+      nombre: `${p.nombre} ${p.apellido}`,
+      mensaje: this.wa.buildMessage(p),
+      waUrl: this.wa.buildUrl(p)
+    }));
+    this.dialog.open(MessagePreviewDialogComponent, { width: '720px', data: { items } });
+  }
 
-  const items = selected.map(p => ({
-    nombre: `${p.nombre} ${p.apellido ?? ''}`.trim(),
-    mensaje: this.wa.buildMessage(p),
-    waUrl: this.wa.buildUrl(p),
-  }));
-
-  this.dialog.open(MessagePreviewDialogComponent, {
-    width: '720px',
-    data: { items }
-  });
-}
+  // Selección
+  updateSelection() { this.selectedCount = this.data().filter(p => p.selected).length; }
+  toggleAll(checked: boolean) { this.data.update(list => list.map(p => ({ ...p, selected: checked && !p.enviado }))); this.updateSelection(); }
+  allSelected() { const list = this.data(); const selectable = list.filter(p => !p.enviado); return selectable.length > 0 && selectable.every(p => p.selected); }
+  someSelected() { const list = this.data(); const selectable = list.filter(p => !p.enviado); return selectable.some(p => p.selected) && !this.allSelected(); }
 }
