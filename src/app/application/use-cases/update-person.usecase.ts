@@ -8,6 +8,8 @@ export interface UpdatePersonInput {
   telefono?: string | null;
   nota?: string | null;
   enviado?: boolean;
+  confirmado?: boolean;           // agregado
+  fechaConfirmacion?: string;     // agregado
 }
 
 export class UpdatePerson {

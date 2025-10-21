@@ -9,4 +9,6 @@ export interface Person {
   telefono?: string | null;
   nota?: string | null;
   enviado: boolean;
+  confirmado?: boolean;
+  fechaConfirmacion?: string;
 }

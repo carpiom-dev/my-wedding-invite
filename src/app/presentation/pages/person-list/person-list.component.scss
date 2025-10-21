@@ -23,3 +23,19 @@ button[mat-raised-button][disabled],
 button[mat-stroked-button][disabled] {
   opacity: 0.5;
 }
+
+/* Centrar ícono y texto de confirmación */
+td.mat-cell div.flex {
+  align-items: center;
+}
+
+.text-green-700 {
+  color: #7ca86d !important;
+}
+
+.text-gray-400 {
+  color: #9ca3af !important;
+  font-style: italic;
+  font-weight: 500;
+}
+

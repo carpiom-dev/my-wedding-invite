@@ -8,6 +8,7 @@ import { LIST_PERSONS, REMOVE_PERSON } from '@infrastructure/di/injection-tokens
 import { WhatsappService } from '@infrastructure/services/whatsapp.service';
 import { PersonDialogComponent } from '@presentation/components/person-dialog/person-dialog.component';
 import { MessagePreviewDialogComponent } from '@presentation/components/message-preview-dialog/message-preview-dialog.component';
+import { PersonFirestoreRepository } from '@infrastructure/repositories/person-firestore.repository';
 
 @Component({
   selector: 'app-person-list',
@@ -22,12 +23,17 @@ export class PersonListComponent {
   private dialog = inject(MatDialog);
   private snack = inject(MatSnackBar);
   private wa = inject(WhatsappService);
-
+  private repo = inject(PersonFirestoreRepository);
   data = signal<any[]>([]);
   displayedColumns = ['select', 'nombre', 'telefono', 'acciones'];
   selectedCount = 0;
 
-  async ngOnInit() { await this.refresh(); }
+  async ngOnInit() {
+    this.repo.onSnapshot((persons) => {
+      this.data.set(persons.map(p => ({ ...p, selected: false })));
+      this.updateSelection();
+    });
+  }
 
   async refresh() {
     const people = await this.list.execute();

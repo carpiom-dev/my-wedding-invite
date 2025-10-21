@@ -1,44 +1,30 @@
 import { Provider } from '@angular/core';
-import { InMemoryPersonRepository } from '@infrastructure/repositories/in-memory-person.repository';
-import { ListPersons } from '@application/use-cases/list-persons.usecase';
-import { GetPerson } from '@application/use-cases/get-person.usecase';
 import { AddPerson } from '@application/use-cases/add-person.usecase';
+import { ListPersons } from '@application/use-cases/list-persons.usecase';
 import { UpdatePerson } from '@application/use-cases/update-person.usecase';
 import { RemovePerson } from '@application/use-cases/remove-person.usecase';
-import {
-  LIST_PERSONS,
-  GET_PERSON,
-  ADD_PERSON,
-  UPDATE_PERSON,
-  REMOVE_PERSON,
-} from './injection-tokens';
+import { ADD_PERSON, LIST_PERSONS, UPDATE_PERSON, REMOVE_PERSON } from './injection-tokens';
+import { PersonFirestoreRepository } from '@infrastructure/repositories/person-firestore.repository';
 
 export const APP_PROVIDERS: Provider[] = [
-  InMemoryPersonRepository,
-
-  {
-    provide: LIST_PERSONS,
-    deps: [InMemoryPersonRepository],
-    useFactory: (repo: InMemoryPersonRepository) => new ListPersons(repo),
-  },
-  {
-    provide: GET_PERSON,
-    deps: [InMemoryPersonRepository],
-    useFactory: (repo: InMemoryPersonRepository) => new GetPerson(repo),
-  },
   {
     provide: ADD_PERSON,
-    deps: [InMemoryPersonRepository],
-    useFactory: (repo: InMemoryPersonRepository) => new AddPerson(repo),
+    useFactory: (repo: PersonFirestoreRepository) => new AddPerson(repo),
+    deps: [PersonFirestoreRepository]
+  },
+  {
+    provide: LIST_PERSONS,
+    useFactory: (repo: PersonFirestoreRepository) => new ListPersons(repo),
+    deps: [PersonFirestoreRepository]
   },
   {
     provide: UPDATE_PERSON,
-    deps: [InMemoryPersonRepository],
-    useFactory: (repo: InMemoryPersonRepository) => new UpdatePerson(repo),
+    useFactory: (repo: PersonFirestoreRepository) => new UpdatePerson(repo),
+    deps: [PersonFirestoreRepository]
   },
   {
     provide: REMOVE_PERSON,
-    deps: [InMemoryPersonRepository],
-    useFactory: (repo: InMemoryPersonRepository) => new RemovePerson(repo),
+    useFactory: (repo: PersonFirestoreRepository) => new RemovePerson(repo),
+    deps: [PersonFirestoreRepository]
   },
 ];
