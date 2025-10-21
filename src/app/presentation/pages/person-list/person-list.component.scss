@@ -1,10 +1,55 @@
+/* ============================= */
+/*   FIX PARA TOOLBAR EN MOBILE  */
+/* ============================= */
+
+mat-toolbar {
+  display: flex;
+  flex-wrap: wrap;         /* Evita que se corte en móviles */
+  align-items: center;
+  width: 100%;
+  padding: 8px 12px;
+  box-sizing: border-box;
+}
+
+mat-toolbar span {
+  font-size: 18px;
+  font-weight: 600;
+  white-space: normal;     /* Permite que el texto baje sin romper */
+}
+
 .spacer {
   flex: 1 1 auto;
+  min-width: 10px;
 }
+
+@media (max-width: 480px) {
+  mat-toolbar button {
+    font-size: 13px;
+    padding: 4px 10px;
+  }
+
+  mat-toolbar {
+    padding: 6px 10px;
+  }
+}
+
+/* ============================= */
+/*   CARD + TABLA RESPONSIVA     */
+/* ============================= */
 
 mat-card {
   padding: 12px 16px;
+  overflow-x: auto;              /* ✔ Evita cortes en móvil */
 }
+
+table {
+  width: 100%;
+  min-width: 650px;              /* ✔ Evita que se aplaste en pantallas pequeñas */
+}
+
+/* ============================= */
+/*   ICONOS Y BOTONES            */
+/* ============================= */
 
 button[mat-icon-button] {
   background: rgba(123, 77, 187, 0.07);
@@ -24,7 +69,10 @@ button[mat-stroked-button][disabled] {
   opacity: 0.5;
 }
 
-/* Centrar ícono y texto de confirmación */
+/* ============================= */
+/*   ESTILOS DE CONFIRMACIÓN     */
+/* ============================= */
+
 td.mat-cell div.flex {
   align-items: center;
 }
@@ -38,4 +86,3 @@ td.mat-cell div.flex {
   font-style: italic;
   font-weight: 500;
 }
-

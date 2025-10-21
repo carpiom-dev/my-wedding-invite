@@ -6,6 +6,7 @@ export interface AddPersonInput {
   nombre: string;
   apellido?: string | null;
   telefono?: string | null;
+  cantidadAdmisiones?: number;
   nota?: string | null;
 }
 
@@ -24,6 +25,7 @@ export class AddPerson {
       apellido: input.apellido?.trim() || null,
       telefono,
       nota: input.nota?.trim() || null,
+      cantidadAdmisiones: input.cantidadAdmisiones || 0,
       enviado: false,
     });
   }

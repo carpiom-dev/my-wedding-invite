@@ -1,11 +1,11 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyAzKrh-BOi-m0MM3jd_gCbhxIXlXd4Qy0s",
-    authDomain: "my-wedding-invite-4ec44.firebaseapp.com",
-    projectId: "my-wedding-invite-4ec44",
-    storageBucket: "my-wedding-invite-4ec44.firebasestorage.app",
-    messagingSenderId: "574350738217",
-    appId: "1:574350738217:web:8da9e61bba5152286bad38"
+    apiKey: "AIzaSyDCBAXkWc381HHr0fNHP0Qqtf5u1kx_fnw",
+    authDomain: "my-wedding-invite-2ac9b.firebaseapp.com",
+    projectId: "my-wedding-invite-2ac9b",
+    storageBucket: "my-wedding-invite-2ac9b.firebasestorage.app",
+    messagingSenderId: "914865372011",
+    appId: "1:914865372011:web:5c798cf535d1094070ea2e"
   }
 };

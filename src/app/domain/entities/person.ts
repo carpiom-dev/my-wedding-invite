@@ -10,5 +10,6 @@ export interface Person {
   nota?: string | null;
   enviado: boolean;
   confirmado?: boolean;
+  cantidadAdmisiones?: number;
   fechaConfirmacion?: string;
 }

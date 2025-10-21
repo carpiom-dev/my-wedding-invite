@@ -24,7 +24,7 @@ export class PersonDialogComponent {
 
   person: Person = this.data?.person
     ? { ...this.data.person }
-    : { nombre: '', apellido: '', telefono: '', nota: '', enviado: false };
+    : { nombre: '', apellido: '', telefono: '', nota: '', enviado: false,cantidadAdmisiones: 0 };
 
   ngOnInit() {
     this.onPhoneBlur(); // autocorregir teléfono si ya viene cargado

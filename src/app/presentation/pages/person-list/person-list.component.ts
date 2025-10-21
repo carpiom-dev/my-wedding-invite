@@ -25,7 +25,7 @@ export class PersonListComponent {
   private wa = inject(WhatsappService);
   private repo = inject(PersonFirestoreRepository);
   data = signal<any[]>([]);
-  displayedColumns = ['select', 'nombre', 'telefono', 'acciones'];
+  displayedColumns = ['select', 'nombre', 'telefono','cantidadAdmisiones', 'acciones'];
   selectedCount = 0;
 
   async ngOnInit() {
