@@ -1,14 +1,18 @@
 <mat-card class="mx-auto mt-10 p-6 max-w-md text-center">
   <h2>Hola {{ nombre }}!</h2>
-  <p>Gracias por recibir tu invitación digital.</p>
+  <p>Nos alegra mucho contar contigo en nuestro gran día 💍</p>
 
-  <ng-container *ngIf="!confirmado; else confirmedBlock">
-    <button mat-raised-button color="primary" (click)="confirmar()">
-      Confirmar asistencia
-    </button>
-  </ng-container>
-
-  <ng-template #confirmedBlock>
-    <p class="text-green-700 font-semibold">¡Has confirmado tu asistencia! ✅</p>
-  </ng-template>
+  @if(!confirmado){
+    <ng-container>
+      <button mat-raised-button color="primary" (click)="confirmar()">
+        Confirmar asistencia
+      </button>
+    </ng-container>
+  } @else {
+    <ng-template #confirmedBlock>
+      <p class="text-green-700 font-semibold mt-4">
+        ¡Has confirmado tu asistencia! ✅
+      </p>
+    </ng-template>
+  }
 </mat-card>

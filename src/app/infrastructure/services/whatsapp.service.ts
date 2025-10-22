@@ -10,7 +10,9 @@ export class WhatsappService {
   private snack = inject(MatSnackBar);
 
   buildMessage(person: Person): string {
-    return buildInviteText(person);
+    const url = `https://mi-boda.com/confirm?id=${person.id.value}`;
+    const message = buildInviteText(person);
+    return `${message} \n\nPor favor confirma tu asistencia aquí: ${url}`;
   }
 
   buildUrl(person: Person): string {
