@@ -171,4 +171,58 @@ button[mat-icon-button]:hover mat-icon {
   opacity: 0.8;
 }
 
+.mat-paginator .mat-select {
+  background-color: #6a9a28 !important;
+  color: white !important;
+  border-radius: 4px !important;
+  padding: 5px 12px !important;
+  font-size: 14px !important;
+  font-weight: 600;
+  border: none !important;
+}
+
+.mat-paginator .mat-select-trigger {
+  background-color: #6a9a28 !important;
+  color: white !important;
+  padding: 8px 16px !important;
+  border-radius: 4px !important;
+}
+
+.mat-paginator .mat-select-arrow {
+  color: white !important;
+}
+
+.mat-paginator .mat-select-panel {
+  background-color: #f4f4f4 !important;
+  border-radius: 4px !important;
+}
+
+.mat-paginator .mat-button,
+.mat-paginator .mat-icon-button {
+  background-color: #6a9a28 !important;
+  color: white !important;
+  border-radius: 50% !important;
+  margin: 0 4px !important;
+  padding: 6px !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.mat-paginator .mat-button:hover,
+.mat-paginator .mat-icon-button:hover {
+  background-color: #4f7e1e !important;
+}
+
+.mat-paginator .mat-icon {
+  font-size: 18px !important;
+}
+
+.mat-paginator .mat-paginator-range-label {
+  font-size: 14px !important;
+  font-weight: 500;
+  color: #333 !important;
+}
+
+
+
+
 

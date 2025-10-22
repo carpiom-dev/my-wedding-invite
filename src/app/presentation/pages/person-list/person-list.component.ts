@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,7 +15,8 @@ import { PersonFirestoreRepository } from '@infrastructure/repositories/person-f
   standalone: true,
   imports: [CommonModule, FormsModule, MaterialModule],
   templateUrl: './person-list.component.html',
-  styleUrls: ['./person-list.component.scss']
+  styleUrls: ['./person-list.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PersonListComponent {
   private list = inject(LIST_PERSONS);
@@ -25,20 +26,42 @@ export class PersonListComponent {
   private wa = inject(WhatsappService);
   private repo = inject(PersonFirestoreRepository);
   data = signal<any[]>([]);
-  displayedColumns = ['select', 'nombre', 'telefono', 'confirmado', 'acciones'];
+  displayedColumns = ['select', 'nombre', 'telefono', 'acciones'];
   selectedCount = 0;
+  isLoading = false;
+  pageIndex = 0;
+  pageSize = 5;
 
   async ngOnInit() {
-    this.repo.onSnapshot((persons) => {
-      this.data.set(persons.map(p => ({ ...p, selected: false })));
-      this.updateSelection();
-    });
+    this.isLoading = true;
+    try {
+      this.repo.onSnapshot((persons) => {
+        this.data.set(persons.map(p => ({ ...p, selected: false })));
+        this.updateSelection();
+      });
+    } catch (error) {
+      console.error('Error al eliminar', error);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   async refresh() {
-    const people = await this.list.execute();
-    this.data.set(people.map(p => ({ ...p, selected: false })));
-    this.updateSelection();
+    this.isLoading = true;
+    try {
+      const people = await this.list.execute();
+      this.data.set(people.map(p => ({ ...p, selected: false })));
+      this.updateSelection();
+    } catch (error) {
+      console.error('Error al eliminar', error);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  onPageChange(event: any) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
   }
 
   openDialog(person?: any) {
@@ -56,12 +79,18 @@ export class PersonListComponent {
   }
 
   async delete(id: string) {
-    await this.remove.execute({ value: id });
-    this.snack.open('Invitado eliminado', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
-    await this.refresh();
+    this.isLoading = true;
+    try {
+      await this.remove.execute({ value: id });
+      this.snack.open('Invitado eliminado', 'Cerrar', { duration: 3000, panelClass: ['snackbar-error'] });
+      await this.refresh();
+    } catch (error) {
+      console.error('Error al eliminar', error);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
-  // WhatsApp
   async sendOne(person: any) {
     const phone = person.telefono?.replace(/\D/g, '');
     if (!/^593\d{9}$/.test(phone)) {

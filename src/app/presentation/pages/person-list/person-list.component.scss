@@ -24,7 +24,6 @@ button[mat-stroked-button][disabled] {
   opacity: 0.5;
 }
 
-/* Centrar ícono y texto de confirmación */
 td.mat-cell div.flex {
   align-items: center;
 }
@@ -37,5 +36,51 @@ td.mat-cell div.flex {
   color: #9ca3af !important;
   font-style: italic;
   font-weight: 500;
+}
+
+.mat-paginator {
+  background-color: #f4f4f4;  /* Fondo del paginador */
+  border-radius: 8px;  /* Bordes redondeados */
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mat-paginator .mat-select-trigger {
+  background-color: #6a9a28;  /* Color de fondo del selector de página */
+  color: white;
+  border-radius: 4px;
+  font-weight: 600;
+  padding: 6px 12px;
+}
+
+.mat-paginator .mat-button,
+.mat-paginator .mat-icon-button {
+  background-color: #6a9a28;  /* Color de los botones de paginación */
+  color: white;
+  border-radius: 50%;
+  margin: 0 4px;
+  padding: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.mat-paginator .mat-button:hover,
+.mat-paginator .mat-icon-button:hover {
+  background-color: #4f7e1e;  /* Color de fondo al pasar el ratón */
+}
+
+.mat-paginator .mat-icon {
+  font-size: 18px;  /* Tamaño de los iconos */
+}
+
+.mat-paginator .mat-paginator-range-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+::ng-deep .mat-progress-bar-fill {
+  background-color: olive !important;
 }
 

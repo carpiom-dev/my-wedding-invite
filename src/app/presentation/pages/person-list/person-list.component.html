@@ -3,8 +3,12 @@
   <span class="spacer"></span>
   <button mat-raised-button color="accent" (click)="openDialog()">Agregar</button>
 </mat-toolbar>
-
 <mat-card>
+  @if(isLoading){
+    <div class="loading-overlay">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+  }
   <table mat-table [dataSource]="data()" class="mat-elevation-z2">
 
     <!-- Selección -->
@@ -43,23 +47,6 @@
       <td mat-cell *matCellDef="let p">{{ p.telefono }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="confirmado">
-      <th mat-header-cell *matHeaderCellDef>Confirmado</th>
-      <td mat-cell *matCellDef="let p">
-        <div class="flex items-center gap-2">
-           @if(p.confirmado){
-            <mat-icon class="text-green-700">check_circle</mat-icon>
-           }
-          @if(p.confirmado){
-            <span>{{ p.fechaConfirmacion | date:'shortDate' }}</span>
-          }
-          @if(!p.confirmado){
-            <span  class="text-gray-400">—</span>
-          }
-        </div>
-      </td>
-    </ng-container>
-
     <!-- Acciones -->
     <ng-container matColumnDef="acciones">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
@@ -84,7 +71,26 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns" [class.not-sent]="!row.enviado"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td [attr.colspan]="displayedColumns.length" style="text-align: center; padding-top: 24px; padding-bottom: 24px;">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;">
+          <mat-icon class="icon-delete">error</mat-icon>
+          <div style="font-size: 20px; font-weight: 600;">
+            No hay registros disponibles
+          </div>
+        </div>
+      </td>
+    </tr>
   </table>
+  <mat-paginator
+    [length]="data().length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25]"
+    [pageIndex]="pageIndex"
+    (page)="onPageChange($event)"
+    showFirstLastButtons>
+  </mat-paginator>
 
   <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:16px;">
     <button mat-stroked-button (click)="previewSelected()" [disabled]="selectedCount === 0">

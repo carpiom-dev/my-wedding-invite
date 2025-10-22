@@ -10,6 +10,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   exports: [
@@ -20,9 +22,11 @@ import { MatDividerModule } from '@angular/material/divider';
     MatTableModule,
     MatDividerModule,
     MatCardModule,
+    MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
+    MatProgressBarModule,
     MatSnackBarModule,
   ]
 })
