@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,11 +9,12 @@ import { WhatsappService } from '@infrastructure/services/whatsapp.service';
 import { PersonDialogComponent } from '@presentation/components/person-dialog/person-dialog.component';
 import { MessagePreviewDialogComponent } from '@presentation/components/message-preview-dialog/message-preview-dialog.component';
 import { PersonFirestoreRepository } from '@infrastructure/repositories/person-firestore.repository';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-person-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, MaterialModule],
+  imports: [CommonModule, FormsModule, MaterialModule, MatPaginatorModule],
   templateUrl: './person-list.component.html',
   styleUrls: ['./person-list.component.scss']
 })
@@ -25,15 +26,43 @@ export class PersonListComponent {
   private wa = inject(WhatsappService);
   private repo = inject(PersonFirestoreRepository);
   data = signal<any[]>([]);
-  displayedColumns = ['select', 'nombre', 'telefono','cantidadAdmisiones', 'acciones'];
+  displayedColumns = ['select','index', 'nombre', 'telefono','cantidadAdmisiones', 'acciones'];
   selectedCount = 0;
+  filter = signal('');
+  pageIndex = signal(0);
+  pageSize = signal(5);
 
-  async ngOnInit() {
-    this.repo.onSnapshot((persons) => {
-      this.data.set(persons.map(p => ({ ...p, selected: false })));
-      this.updateSelection();
-    });
-  }
+  totalAdmisiones = computed(() =>
+    this.data().reduce((acc, p) => acc + (p.cantidadAdmisiones ?? 0), 0)
+  );
+
+filteredData = computed(() => {
+  const term = this.filter().toLowerCase();
+
+  return this.data().filter(p => {
+    const nombre = (p.nombre ?? '').toLowerCase();
+    const apellido = (p.apellido ?? '').toLowerCase();
+    const telefono = (p.telefono ?? '');
+
+    return (
+      nombre.includes(term) ||
+      apellido.includes(term) ||
+      telefono.includes(term)
+    );
+  });
+});
+
+  pagedData = computed(() => {
+    const start = this.pageIndex() * this.pageSize();
+    const end = start + this.pageSize();
+    return this.filteredData().slice(start, end);
+  });
+    async ngOnInit() {
+      this.repo.onSnapshot((persons) => {
+        this.data.set(persons.map(p => ({ ...p, selected: false })));
+        this.updateSelection();
+      });
+    }
 
   async refresh() {
     const people = await this.list.execute();

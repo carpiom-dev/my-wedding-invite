@@ -3,9 +3,18 @@
   <span class="spacer"></span>
   <button mat-raised-button color="accent" (click)="openDialog()">Agregar</button>
 </mat-toolbar>
-
+<div style="padding: 12px; font-size: 18px; font-weight: 600;">
+  Total Admisiones: {{ totalAdmisiones() }}
+</div>
 <mat-card>
-  <table mat-table [dataSource]="data()" class="mat-elevation-z2">
+<mat-form-field appearance="outline" style="width: 300px; margin-bottom: 16px;">
+  <mat-label>Buscar invitado</mat-label>
+  <input matInput (input)="filter.set($any($event.target).value)" placeholder="Nombre, apellido o teléfono">
+  <button *ngIf="filter()" matSuffix mat-icon-button (click)="filter.set('')">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+  <table mat-table [dataSource]="pagedData()" class="mat-elevation-z2">
 
     <!-- Selección -->
     <ng-container matColumnDef="select">
@@ -22,6 +31,14 @@
           (change)="updateSelection()"
           [disabled]="p.enviado">
         </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Número de fila -->
+    <ng-container matColumnDef="index">
+      <th mat-header-cell *matHeaderCellDef>#</th>
+      <td mat-cell *matCellDef="let row; let i = index">
+        {{ i + 1 }}
       </td>
     </ng-container>
 
@@ -96,7 +113,13 @@
         [class.not-sent]="!row.enviado">
     </tr>
   </table>
-
+<mat-paginator
+  [length]="filteredData().length"
+  [pageSize]="pageSize()"
+  [pageIndex]="pageIndex()"
+  [pageSizeOptions]="[5, 10, 25]"
+  (page)="pageIndex.set($event.pageIndex); pageSize.set($event.pageSize)">
+</mat-paginator>
   <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:16px;">
     <button mat-stroked-button (click)="previewSelected()" [disabled]="selectedCount === 0">
       <mat-icon>visibility</mat-icon> Preview {{ selectedCount }}
