@@ -38,10 +38,13 @@
     placeholder="Ej: 1"
   />
 </mat-form-field>
-  <mat-form-field appearance="outline" class="w-full">
-    <mat-label>Nota</mat-label>
-    <textarea matInput rows="2" [(ngModel)]="person.nota"></textarea>
-  </mat-form-field>
+<mat-form-field appearance="outline" class="w-full">
+  <mat-label>¿Confirmado?</mat-label>
+  <mat-select [(ngModel)]="person.nota">
+    <mat-option value="SI">Sí</mat-option>
+    <mat-option value="NO">No</mat-option>
+  </mat-select>
+</mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

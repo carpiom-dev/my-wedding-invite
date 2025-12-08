@@ -10,12 +10,15 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 @NgModule({
   exports: [
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
+    MatOptionModule,
+    MatSelectModule,
     MatCheckboxModule,
     MatTableModule,
     MatDividerModule,

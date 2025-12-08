@@ -26,7 +26,7 @@ export class PersonListComponent {
   private wa = inject(WhatsappService);
   private repo = inject(PersonFirestoreRepository);
   data = signal<any[]>([]);
-  displayedColumns = ['select','index', 'nombre', 'telefono','cantidadAdmisiones', 'acciones'];
+  displayedColumns = ['select','index', 'nombre', 'telefono','cantidadAdmisiones','confirmado', 'acciones'];
   selectedCount = 0;
   filter = signal('');
   pageIndex = signal(0);
@@ -58,6 +58,7 @@ filteredData = computed(() => {
     return this.filteredData().slice(start, end);
   });
     async ngOnInit() {
+      console.log(this.data)
       this.repo.onSnapshot((persons) => {
         this.data.set(persons.map(p => ({ ...p, selected: false })));
         this.updateSelection();

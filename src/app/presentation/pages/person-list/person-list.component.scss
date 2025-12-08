@@ -86,3 +86,29 @@ td.mat-cell div.flex {
   font-style: italic;
   font-weight: 500;
 }
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  display: inline-block;
+  font-size: 14px;
+}
+
+/* SI = verde */
+.badge-si {
+  background-color: #e6f4ea;   /* verde suave */
+  color: #1e7e34;              /* verde fuerte */
+}
+
+/* NO = rojo */
+.badge-no {
+  background-color: #fdecea;   /* rojo suave */
+  color: #c92a2a;              /* rojo fuerte */
+}
+
+/* Pendiente = naranja */
+.badge-pendiente {
+  background-color: #fff4e5;   /* naranja suave */
+  color: #d48a00;              /* naranja fuerte */
+}

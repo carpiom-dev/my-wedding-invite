@@ -68,22 +68,26 @@
     </ng-container>
 
     <!-- Confirmado -->
-    <ng-container matColumnDef="confirmado">
-      <th mat-header-cell *matHeaderCellDef>Confirmado</th>
-      <td mat-cell *matCellDef="let p">
-        <div class="flex items-center gap-2">
-          @if(p.confirmado){
-            <mat-icon class="text-green-700">check_circle</mat-icon>
-          }
-          @if(p.confirmado){
-            <span>{{ p.fechaConfirmacion | date:'shortDate' }}</span>
-          }
-          @if(!p.confirmado){
-            <span class="text-gray-400">—</span>
-          }
-        </div>
-      </td>
-    </ng-container>
+<ng-container matColumnDef="confirmado">
+  <th mat-header-cell *matHeaderCellDef> Confirmado </th>
+
+  <td mat-cell *matCellDef="let p">
+
+    <span
+      class="badge"
+      [ngClass]="{
+        'badge-si': p.nota === 'SI',
+        'badge-no': p.nota === 'NO',
+        'badge-pendiente': !p.nota
+      }"
+    >
+      @if(p.nota === 'SI'){ Sí }
+      @if(p.nota === 'NO'){ No }
+      @if(!p.nota){ Pendiente }
+    </span>
+
+  </td>
+</ng-container>
 
     <!-- Acciones -->
     <ng-container matColumnDef="acciones">
