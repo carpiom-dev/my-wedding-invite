@@ -32,9 +32,23 @@ export class PersonListComponent {
   pageIndex = signal(0);
   pageSize = signal(5);
 
-  totalAdmisiones = computed(() =>
-    this.data().reduce((acc, p) => acc + (p.cantidadAdmisiones ?? 0), 0)
-  );
+totalAdmisiones = computed(() =>
+  this.data().reduce((acc, p) => acc + (p.cantidadAdmisiones ?? 0), 0)
+);
+
+totalConfirmados = computed(() =>
+  this.data().reduce(
+    (acc, p) => acc + (p.nota === 'SI' ? (p.cantidadAdmisiones ?? 0) : 0),
+    0
+  )
+);
+
+totalPendientes = computed(() =>
+  this.data().reduce(
+    (acc, p) => acc + (!p.nota ? (p.cantidadAdmisiones ?? 0) : 0),
+    0
+  )
+);
 
 filteredData = computed(() => {
   const term = this.filter().toLowerCase();
@@ -58,8 +72,9 @@ filteredData = computed(() => {
     return this.filteredData().slice(start, end);
   });
     async ngOnInit() {
-      console.log(this.data)
+      console.log(this.data())
       this.repo.onSnapshot((persons) => {
+        console.log(persons)
         this.data.set(persons.map(p => ({ ...p, selected: false })));
         this.updateSelection();
       });
