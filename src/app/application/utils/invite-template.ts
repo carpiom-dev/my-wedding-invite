@@ -9,13 +9,19 @@ export function buildInviteText(person: Person): string {
 
   const url = `${baseUrl}?nombre=${encodeURIComponent(nombre)}&invitados=${encodeURIComponent(invitados)}`;
 
-  return `💍 *Querido(a) ${nombre}*,
+  return `Estimado(a) ${nombre},
 
-Con todo nuestro cariño, queremos invitarte a compartir un día muy especial en nuestras vidas.
-Tu presencia hará de este momento algo inolvidable ✨
+Esperamos que se encuentre muy bien.
+Con mucho cariño, deseamos confirmar con usted su asistencia a nuestro matrimonio, ya que nos encontramos en la etapa final de organización del evento.
 
-👥 Invitación válida para *${invitados}* persona(s)
+Esta invitación es válida para ${invitados} persona(s).
 
-Haz clic aquí para ver tu invitación personalizada 👇
-${url}`;
+Le agradeceríamos que pueda confirmar su asistencia a través del siguiente enlace a más tardar el día 25 de este mes.
+En caso de no recibir su confirmación dentro del plazo indicado, entenderemos que no podrá acompañarnos y no podremos considerarlo dentro de la planificación del evento.
+
+${url}
+
+Agradecemos mucho su comprensión y esperamos contar con su presencia.
+Cordialmente,
+Adrian & Josselyn`;
 }
