@@ -2,6 +2,10 @@ import { Person } from '@domain/entities/person';
 
 export function buildInviteText(person: Person): string {
 
+  const invitado = [person.nombre, person.apellido]
+    .filter(Boolean)
+    .join(' ');
+
   const invitados = person.cantidadAdmisiones ?? 1;
 
   const bride = person.nombre;
@@ -12,19 +16,19 @@ export function buildInviteText(person: Person): string {
   const url =
     `${baseUrl}?groom=${encodeURIComponent(bride)}&bride=${encodeURIComponent(groom)}&adm=${encodeURIComponent(invitados)}`;
 
-  return `Estimado(a) ${bride} ${groom},
+  return `Estimado(a) ${invitado},
 
-Esperamos que se encuentre muy bien.
-Con mucho cariño, deseamos confirmar con usted su asistencia a nuestro matrimonio, ya que nos encontramos en la etapa final de organización del evento.
+Con profunda alegría y gratitud a Dios, queremos compartir con usted una noticia muy especial en nuestras vidas: hemos decidido unirnos en matrimonio.
+
+Sería un honor inmenso contar con su presencia en este día tan significativo, donde celebraremos el amor, la fe y el inicio de un nuevo camino juntos, bajo la bendición del Señor.
 
 Esta invitación es válida para ${invitados} persona(s).
 
-Le agradeceríamos que pueda confirmar su asistencia a través del siguiente enlace a más tardar el día 25 de este mes.
-En caso de no recibir su confirmación dentro del plazo indicado, entenderemos que no podrá acompañarnos y no podremos considerarlo dentro de la planificación del evento.
+Hemos preparado con mucho cariño nuestra invitación digital, donde podrá encontrar todos los detalles de esta hermosa celebración:
 
 ${url}
 
-Agradecemos mucho su comprensión y esperamos contar con su presencia.
-Cordialmente,
-Ruben & Madeline`;
+Gracias por acompañarnos con su afecto, sus oraciones y sus buenos deseos en esta nueva etapa que comenzamos.
+
+Con cariño y bendiciones.`;
 }
