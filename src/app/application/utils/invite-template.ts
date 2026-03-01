@@ -3,11 +3,15 @@ import { Person } from '@domain/entities/person';
 export function buildInviteText(person: Person): string {
   const nombre = [person.nombre, person.apellido].filter(Boolean).join(' ');
 
-  const baseUrl = 'https://carpiom-dev.github.io/wedding-invite';
-
   const invitados = person.cantidadAdmisiones ?? 1;
 
-  const url = `${baseUrl}?nombre=${encodeURIComponent(nombre)}&invitados=${encodeURIComponent(invitados)}`;
+  const bride = 'Ana Lucia';
+  const groom = 'Carlos Perez';
+
+  const baseUrl = 'https://carpiom-dev.github.io/invitacion-boda/';
+
+  const url =
+    `${baseUrl}?bride=${encodeURIComponent(bride)}&groom=${encodeURIComponent(groom)}&adm=${encodeURIComponent(invitados)}`;
 
   return `Estimado(a) ${nombre},
 
@@ -23,5 +27,5 @@ ${url}
 
 Agradecemos mucho su comprensión y esperamos contar con su presencia.
 Cordialmente,
-Adrian & Josselyn`;
+Ruben & Madeline`;
 }
