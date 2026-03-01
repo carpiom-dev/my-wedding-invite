@@ -14,7 +14,7 @@ export function buildInviteText(person: Person): string {
   const baseUrl = 'https://carpiom-dev.github.io/invitacion-boda/';
 
   const url =
-    `${baseUrl}?groom=${encodeURIComponent(bride)}bride=${encodeURIComponent(groom)}&adm=${encodeURIComponent(invitados)}`;
+    `${baseUrl}?groom=${bride}&bride=${encodeURIComponent(groom)}&adm=${encodeURIComponent(invitados)}`;
 
   return `Estimado(a) ${invitado},
 
