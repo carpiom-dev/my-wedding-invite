@@ -4,7 +4,7 @@ export function buildInviteText(person: Person): string {
 
   const invitado = [person.nombre, person.apellido]
     .filter(Boolean)
-    .join(' ');
+    .join(' & ');
 
   const invitados = person.cantidadAdmisiones ?? 1;
 
@@ -14,7 +14,7 @@ export function buildInviteText(person: Person): string {
   const baseUrl = 'https://carpiom-dev.github.io/invitacion-boda/';
 
   const url =
-    `${baseUrl}?groom=${bride}&bride=${encodeURIComponent(groom)}&adm=${encodeURIComponent(invitados)}`;
+    `${baseUrl}?groom=${encodeURIComponent(bride)}&bride=${encodeURIComponent(groom)}&adm=${encodeURIComponent(invitados)}`;
 
   return `Estimado(a) ${invitado},
 
