@@ -1,19 +1,18 @@
 import { Person } from '@domain/entities/person';
 
 export function buildInviteText(person: Person): string {
-  const nombre = [person.nombre, person.apellido].filter(Boolean).join(' ');
 
   const invitados = person.cantidadAdmisiones ?? 1;
 
-  const bride = 'Ana Lucia';
-  const groom = 'Carlos Perez';
+  const bride = person.nombre;
+  const groom = person.apellido ?? '';
 
   const baseUrl = 'https://carpiom-dev.github.io/invitacion-boda/';
 
   const url =
     `${baseUrl}?bride=${encodeURIComponent(bride)}&groom=${encodeURIComponent(groom)}&adm=${encodeURIComponent(invitados)}`;
 
-  return `Estimado(a) ${nombre},
+  return `Estimado(a)  ${groom} ${bride},
 
 Esperamos que se encuentre muy bien.
 Con mucho cariño, deseamos confirmar con usted su asistencia a nuestro matrimonio, ya que nos encontramos en la etapa final de organización del evento.
