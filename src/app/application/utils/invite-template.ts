@@ -14,7 +14,7 @@ export function buildInviteText(person: Person): string {
   const baseUrl = 'https://carpiom-dev.github.io/invitacion-boda/';
 
   const url =
-    `${baseUrl}?groom=${encodeURIComponent(bride)}&bride=${encodeURIComponent(groom)}&adm=${encodeURIComponent(invitados)}`;
+    `${baseUrl}?groom=${encodeURIComponent(bride)}bride=${encodeURIComponent(groom)}&adm=${encodeURIComponent(invitados)}`;
 
   return `Estimado(a) ${invitado},
 
@@ -30,5 +30,8 @@ ${url}
 
 Gracias por acompañarnos con su afecto, sus oraciones y sus buenos deseos en esta nueva etapa que comenzamos.
 
-Con cariño y bendiciones.`;
+Con cariño y bendiciones.
+
+Cordialmente,
+Ruben & Madeline`;
 }
