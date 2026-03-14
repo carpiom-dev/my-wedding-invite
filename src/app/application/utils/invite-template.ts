@@ -33,5 +33,5 @@ Gracias por acompañarnos con su afecto, sus oraciones y sus buenos deseos en es
 Con cariño y bendiciones.
 
 Cordialmente,
-Ruben & Madeline`;
+Ruben & Madelin`;
 }
