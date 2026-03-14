@@ -24,7 +24,7 @@ export class PersonDialogComponent {
 
   person: Person = this.data?.person
     ? { ...this.data.person }
-    : { nombre: '', apellido: '', telefono: '', nota: '', enviado: false,cantidadAdmisiones: 0 };
+    : { nombre: '', apellido: '', telefono: '', nota: '', enviado: false, cantidadAdmisiones: 0 };
 
   ngOnInit() {
     this.onPhoneBlur(); // autocorregir teléfono si ya viene cargado
@@ -32,24 +32,22 @@ export class PersonDialogComponent {
 
   onPhoneBlur() {
     if (!this.person.telefono) return;
-    let tel = this.person.telefono.trim().replace(/\D/g, '');
-    if (tel.startsWith('0') && tel.length === 10) {
-      tel = `593${tel.substring(1)}`;
-    } else if (!tel.startsWith('593')) {
-      tel = `593${tel}`;
-    }
-    this.person.telefono = tel;
+    // Solo eliminar caracteres no numéricos (espacios, guiones, paréntesis, etc.)
+    this.person.telefono = this.person.telefono.trim().replace(/[^\d+]/g, '');
   }
 
   isPhoneValid(phone?: string | null): boolean {
-    const tel = (phone || '').trim().replace(/\D/g, '');
-    return /^593\d{9}$/.test(tel);
+    if (!phone || phone.trim().length === 0) return true; // campo opcional
+    // Eliminar todo excepto dígitos
+    const digits = phone.trim().replace(/\D/g, '');
+    // Estándar E.164: entre 7 y 15 dígitos
+    return digits.length >= 7 && digits.length <= 15;
   }
 
   async save() {
     if (!this.isPhoneValid(this.person.telefono)) {
-      this.snack.open('Número de teléfono inválido. Ej: 593999000111', 'Cerrar', {
-        duration: 3000,
+      this.snack.open('Número inválido. Ingresa entre 7 y 15 dígitos.', 'Cerrar', {
+        duration: 4000,
         panelClass: ['snackbar-error']
       });
       return;

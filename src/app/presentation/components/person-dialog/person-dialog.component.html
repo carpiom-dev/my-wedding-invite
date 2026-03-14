@@ -20,13 +20,9 @@
       type="tel"
       [(ngModel)]="person.telefono"
       (blur)="onPhoneBlur()"
-      placeholder="Ej: 0962786611"
+      placeholder="Ej: +34612345678 · +1234567890"
     />
-    <mat-hint align="start">Se completará automáticamente con 593 si falta</mat-hint>
-    @if(!isPhoneValid(person.telefono)){
-
-    }
-
+    <mat-hint align="start">Con prefijo del país, sin espacios. Ej: 34612345678</mat-hint>
   </mat-form-field>
 <mat-form-field appearance="outline" class="w-full">
   <mat-label>Cantidad de admisiones</mat-label>
